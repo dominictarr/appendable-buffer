@@ -1,11 +1,13 @@
 function append(buffer, index) {
   var freeIndex = buffer.readUInt32BE(0)
 }
+
 function available(buffer) {
   //the location of the next available free space
   //is stored at the first 32bit int
   return buffer.length - (buffer.readUInt32BE(0)+4)
 }
+
 function alloc (buffer, size, append_index) {
   var index = buffer.readUInt32BE(0)+4
   //pointer to free memory
@@ -44,12 +46,23 @@ function readUInt32BE(buffer, block_index, index) {
   return buffer.readUInt32BE(block_index+8+index)
 }
 
+function size (buffer, block_index) {
+  var size = 0
+  do {
+    size += buffer.readUInt32BE(block_index)
+    block_index = buffer.readUInt32BE(block_index+4)
+  }
+  while(block_index)
+  return size
+}
+
 module.exports = function (buffer) {
   return {
     available: available.bind(null, buffer),
     alloc: alloc.bind(null, buffer),
     writeUInt32BE: writeUInt32BE.bind(null, buffer),
-    readUInt32BE: readUInt32BE.bind(null, buffer)
+    readUInt32BE: readUInt32BE.bind(null, buffer),
+    size: size.bind(null, buffer)
   }
 }
 

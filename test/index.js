@@ -12,6 +12,7 @@ tape('create a new appendable', function (t) {
 
   a.writeUInt32BE(0x01010101, index, 0)
   a.writeUInt32BE(0x01010101, index, 4)
+  t.equal(a.size(index), 8)
   console.log(b)
 
   t.throws(function () {
@@ -19,6 +20,7 @@ tape('create a new appendable', function (t) {
   }, 'Cannot write past the end')
 
   var index2 = a.alloc(16, index)
+  t.equal(a.size(index), 24)
 
   console.log('index2')
   t.equal(index2, 4+8+8) //the first allocation should be right after the free memory pointer.

@@ -48,14 +48,30 @@ a.writeUInt32BE(9, i, 36)
 assert.equal(a.readUInt32BE(i, 36), a.readUInt32BE(i2, 0))
 ```
 
+## api: a = Appendable(buffer)
+
+create an instance from a new buffer (or reload a buffer from disk)
+
+### a.available()
+
+return the amount of space available in bytes
+
+### new_block_index = a.alloc(size, block_index?)
+
+allocate another block, appending to block_index if it is provided.
+returns the index of the newly created block.
+
+### a.writeUInt32BE (value, block_index, index)
+
+write a 32 bit int to the blockat `block_index`.
+follows links to the next block if necessary, and throws if index is out of bounds.
+
+### value = a.readUInt32BE (block_index, index)
+
+read a 32 bit int to the block at `block_index`.
+follows links to the next block if necessary, and throws if index is out of bounds.
+
 ## License
 
 MIT
-
-
-
-
-
-
-
 

@@ -71,6 +71,11 @@ follows links to the next block if necessary, and throws if index is out of boun
 read a 32 bit int to the block at `block_index`.
 follows links to the next block if necessary, and throws if index is out of bounds.
 
+
+### size = a.size(block_index)
+
+sum the size of the block at `block_index` and link from there.
+
 ## License
 
 MIT
